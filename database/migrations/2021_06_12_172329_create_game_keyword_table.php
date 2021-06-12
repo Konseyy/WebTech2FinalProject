@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateUsersToKeywordsTable extends Migration
+class CreateGameKeywordTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,10 @@ class CreateUsersToKeywordsTable extends Migration
      */
     public function up()
     {
-        Schema::create('users_to_keywords', function (Blueprint $table) {
-            $table->id()->unique();
-            $table->foreignId('user_id')->nullable()->constrained('users');
-            $table->foreignId('keyword_id')->constrained('keywords');
+        Schema::create('game_keyword', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('game_id')->constraint('games');
+            $table->foreignId('keyword_id')->constraint('keywords');
             $table->timestamps();
         });
     }
@@ -28,6 +28,6 @@ class CreateUsersToKeywordsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('users_to_keywords');
+        Schema::dropIfExists('game_keyword');
     }
 }
