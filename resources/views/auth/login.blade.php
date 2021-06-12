@@ -12,8 +12,10 @@
                         @csrf
                         <div class="form-group row">
                             <div class="col-md-6 offset-md-3">
-                                <a class="btn btn-success btn-block">Login with Google</a>
-                                <a class="btn btn-primary btn-block">Login with Facebook</a>
+                                <p>{{Auth::guest()}}</p>
+                                <p>{{Auth::user()}}</p>
+                                <a href="{{route('login.google')}}" class="btn btn-danger btn-block">Login with Google</a>
+                                <a href="{{route('login.facebook')}}" class="btn btn-primary btn-block">Login with Facebook</a>
                             </div>
                         </div>
                         <p style="text-align: center">or</p>

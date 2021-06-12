@@ -14,8 +14,15 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('auth.login');
 });
+
+Route::get('login/google',[App\Http\Controllers\Auth\LoginController::class, 'google'])->name('login.google');
+Route::get('login/google/redirect',[App\Http\Controllers\Auth\LoginController::class, 'google_redirect']);
+
+Route::get('login/facebook',[App\Http\Controllers\Auth\LoginController::class, 'facebook'])->name('login.facebook');
+Route::get('login/facebook/redirect',[App\Http\Controllers\Auth\LoginController::class, 'facebook_redirect']);
+
 
 Auth::routes();
 
