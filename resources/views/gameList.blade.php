@@ -13,6 +13,11 @@
         <div class="col">
             <div class="card">
                 <div class="card-header">{{ __('Gallery') }}</div>
+                <form enctype="multipart/form-data" method="POST" action="{{route('image.upload',1)}}">
+                @csrf
+                    <input type="file" name="file" id="file">
+                    <input type="submit">
+                </form>
                 <div class="card-body col-md-2">
                     @foreach($games as $game)
                         <p>$game->id</p>

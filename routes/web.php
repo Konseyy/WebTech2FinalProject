@@ -19,5 +19,6 @@ Route::get('/', function () {
 
 Auth::routes();
 
+Route::post('/image/upload/{gameid}','PhotoController@store')->name('image.upload');
 Route::get('/game/new', 'GameController@create')->name('game.new');
 Route::get('/home', 'GameController@index')->name('home');
