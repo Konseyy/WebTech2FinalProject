@@ -35,4 +35,8 @@ class PhotoController extends Controller
         $photo->save();
         return back();
     }
+    public function delete($id){
+        //Delete with with id=$id
+        Photo::where('id',$id)->delete();
+    }
 }
