@@ -32,11 +32,12 @@ class PhotoController extends Controller
         $photo = new Photo;
         $photo->url=$data['file'];
         $photo->game_id=$gameid;
+        $photo->isTemp='yes';
         $photo->save();
         return back();
     }
     public function delete($id){
-        //Delete with with id=$id
-        Photo::where('id',$id)->delete();
+        //Delete with with game_id=$id
+        Photo::where('gmae_id',$id)->delete();
     }
 }

@@ -17,6 +17,7 @@ class CreatePhotosTable extends Migration
             $table->id()->unique();
             $table->string('url');
             $table->foreignId('game_id')->constrained('games');
+            $table->string('isTemp',4);
             $table->timestamps();
         });
     }
