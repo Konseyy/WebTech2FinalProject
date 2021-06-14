@@ -46,10 +46,10 @@ class GameController extends Controller
     }
     public function store(Request $request){
         $request->validate([
-            'name' => 'required|string|max:100',
+            'name' => 'required|string|max:25',
             'user_id'=> 'required',
             'genre' => 'required',
-            'developer' => 'required|string|max:100',
+            'developer' => 'required|string|max:25',
             'description' => 'nullable|string|max:100',
             'file' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
 

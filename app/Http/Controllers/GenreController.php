@@ -15,8 +15,8 @@ class GenreController extends Controller
     }
     public function store(Request $request){
         $request->validate([
-            'name'=> 'required|string|max:30',
-            'description' => 'nullable|string|max:100',
+            'name'=> 'required|string|max:15',
+            'description' => 'nullable|string|max:40',
         ]);
         $genre = new Genre;
         $genre->name=$request->name;
