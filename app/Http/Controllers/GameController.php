@@ -94,6 +94,9 @@ class GameController extends Controller
         $request->validate([
             'game_id' => 'required',
         ]);
+        if(Auth::user()->id!=Game::where('id',$request->game_id)->first()->user_id and Auth::user()->role!='admin'){
+            return redirect()->route('home');
+        }
         View::where('game_id',$request->game_id)->delete();
         Game::where('id',$request->game_id)->delete();
         return redirect()->route('home');

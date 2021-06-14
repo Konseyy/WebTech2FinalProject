@@ -49,7 +49,7 @@
                             </div>
                         </div>
                         <div class="col">
-                            <img style="height:25vw;width:25vw;" src="{{$game->photo_url}}">
+                            <img style="height:25vw;" src="{{$game->photo_url}}">
                         </div>
                         </div>
                     </div>
