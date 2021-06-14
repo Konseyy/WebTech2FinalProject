@@ -7,17 +7,13 @@
                 <div class="card-header text-center">{{ __('Options') }}</div>
                 <div class="card-body col">
                     <a class="btn btn-info btn-block" href="{{route('game.new')}}">Upload New Game</a>
+                    <a class="btn btn-info btn-block" href="{{route('genre.new')}}">Add New Game Genre</a>
                 </div>
             </div>
         </div>
         <div class="col">
             <div class="card">
                 <div class="card-header">{{ __('Gallery') }}</div>
-                <form enctype="multipart/form-data" method="POST" action="{{route('image.upload',1)}}">
-                @csrf
-                    <input type="file" name="file" id="file">
-                    <input type="submit">
-                </form>
                 <div class="card-body col-md-2">
                     @foreach($games as $game)
                         <p>$game->id</p>

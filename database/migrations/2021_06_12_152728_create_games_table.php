@@ -16,6 +16,7 @@ class CreateGamesTable extends Migration
         Schema::create('games', function (Blueprint $table) {
             $table->id()->unique();
             $table->string('name');
+            $table->string('photo_url',100);
             $table->foreignId('user_id')->constrained('users');
             $table->foreignId('genre_id')->constrained('genres');
             $table->string('developer',100);
