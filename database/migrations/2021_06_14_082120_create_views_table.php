@@ -15,7 +15,7 @@ class CreateViewsTable extends Migration
     {
         Schema::create('views', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained('users');
+            $table->foreignId('user_id')->nullable()->constrained('users');
             $table->foreignId('game_id')->constrained('games');
             $table->timestamps();
         });

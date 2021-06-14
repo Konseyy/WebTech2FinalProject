@@ -4,14 +4,21 @@
     <div class="row justify-content-start">
         <div class="col-sm-2">
             <div class="card">
+            @if(!Auth::guest())
                 <div class="card-header text-center" style="font-size:20px;">{{ __('Options') }}</div>
                 <div class="card-body col">
                     @if(isset($caption))
                     <a class="btn btn-info btn-block" href="{{route('home')}}">View all Games</a>
                     @endif
+                    
                     <a class="btn btn-info btn-block" href="{{route('game.new')}}">Upload New Game</a>
                     <a class="btn btn-info btn-block" href="{{route('genre.new')}}">Add New Game Genre</a>
+                    
                 </div>
+                @else
+                <div class="card-header text-center" style="font-size:20px;">Log in to see options</div>
+
+                @endif
             </div>
         </div>
         <div class="col">
@@ -49,7 +56,7 @@
                         </a>
                         </h3>
                         <a href="{{route('game.show',$game->id)}}">
-                        <img style="height:15vw; width:15vw;"  src="{{$game->photo_url}}">
+                        <img style="height:12vw; width:12vw;"  src="{{$game->photo_url}}">
                         </a>
                     </div> 
                 @endforeach

@@ -7,6 +7,7 @@
                 <div class="card-header text-center" style="font-size:20px;">{{ __('Options') }}</div>
                 <div class="card-body col">
                     <a class="btn btn-info btn-block" href="{{route('home')}}">Back to Catalog</a>
+                    @if(!$guest)
                     @if($game->user_id==$user->id or $user->role=='admin')
                     <a class="btn btn-info btn-block" href="{{route('game.edit',$game->id)}}">Edit Game</a>
                     <form action="{{route('game.delete')}}" method="POST">
@@ -14,6 +15,7 @@
                         <input type="hidden" name="game_id" value="{{$game->id}}">
                         <input type="submit" class="btn btn-info btn-danger col" value="Delete Game">
                     </form>
+                    @endif
                     @endif
                 </div>
             </div>
@@ -51,6 +53,7 @@
                             <img style="height:25vw;" src="{{$game->photo_url}}">
                         </div>
                         </div>
+                        @if(!$guest)
                         <div class="row col">
                             <form  class="col" action="{{route('comment.new')}}" method="POST">
                                 @csrf
@@ -64,6 +67,7 @@
                                 </div>
                             </form>
                         </div>
+                        @endif
                         @foreach($comments as $comment)
                             @foreach($users as $current)
                                 @if($comment->user_id==$current->id)
@@ -73,12 +77,14 @@
                                     <p style="margin-left:auto;margin-right:5px;">{{$comment->created_at}}</p>
                                     </div>
                                         <p>{{$comment->content}}</p>
+                                        @if(!$guest)
                                         @if($comment->user_id==$user->id or $user->role=='admin')
                                         <form method="POST" action="{{route('comment.delete')}}">
                                         @csrf
                                         <input type="hidden" name="id" value={{$comment->id}}>
                                         <input type="submit" class="btn btn-block btn-danger" value="Delete">
                                         </form>
+                                        @endif
                                         @endif
                                     </div>
                                     

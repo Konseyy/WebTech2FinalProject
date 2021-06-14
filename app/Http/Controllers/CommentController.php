@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 use App\Models\Comment;
+use Auth;
 use Illuminate\Http\Request;
 
 class CommentController extends Controller
@@ -26,6 +27,9 @@ class CommentController extends Controller
         $request->validate([
             'id' => 'required',
         ]);
+        if(Auth::user()->id!=Comment::where('id',$request->id)->first()->user_id and Auth::user()->role!='admin'){
+            return redirect()->route('home');
+        }
         Comment::where('id',$request->id)->delete();
         return back();
     }
