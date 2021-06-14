@@ -13,7 +13,11 @@
         </div>
         <div class="col">
             <div class="card">
+            @if(!isset($caption))
                 <div class="card-header" style="font-size:30px;">{{ __('Catalog') }}</div>
+            @else
+            <div class="card-header" style="font-size:30px;">{{$caption}}</div>
+            @endif
                 <div class="card-body col">
                 <div class="row">
                 @foreach($games as $game)
@@ -33,11 +37,13 @@
                         @endforeach
                         </h3>
                         <h3 style="text-transform:capitalize;" class="text-muted">
-                        <a href="{{route('home.developer',$game->developer)}}" class="text-muted">
+                        <a href="{{route('home.dev',$game->developer)}}" class="text-muted">
                         {{$game->developer}}
                         </a>
                         </h3>
+                        <a href="{{route('game.show',$game->id)}}">
                         <img style="height:15vw; width:15vw;"  src="{{$game->photo_url}}">
+                        </a>
                     </div> 
                 @endforeach
                 </div>

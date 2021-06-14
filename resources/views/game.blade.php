@@ -24,8 +24,23 @@
                 
                     <div class="card-body col">
                     <div class="row">
-                        <div class="col-sm-3">
-                            <p> kaut las</p>
+                        <div style="padding-left:20px;" class="col-sm-3">
+                            <div class="row">
+                            <h2>Name: {{$game->name}}</h2>
+                            </div>
+                            <div class="row">
+                            <h2>Developer: <a href="{{route('home.dev', $game->developer)}}">{{$game->developer}}</a></h2>
+                            </div>
+                            <div class="row">
+                            <h2>Genre: <a href="{{route('home.genre', $genre->id)}}">{{$genre->name}}</a></h2>
+                            </div>
+                            <div class="row">
+                            @if($game->description!='')
+                            <h4 class="text-muted">Description: {{$game->description}}</h4>
+                            @else
+                            <h4 class="text-muted">Game has no description</h4>
+                            @endif
+                            </div>
                         </div>
                         <div class="col">
                             <img style="height:25vw;width:25vw;" src="{{$game->photo_url}}">

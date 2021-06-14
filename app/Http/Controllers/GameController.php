@@ -22,13 +22,15 @@ class GameController extends Controller
         $games = Game::where('genre_id',$genre_id)->get();
         // dd($games->first());
         $genres = Genre::all();
-        return view('gameList',compact('games','genres'));
+        $caption = "All games in ".Genre::where('id',$genre_id)->first()->name." genre";
+        return view('gameList',compact('games','genres','caption'));
     }
     public function indexByDeveloper($developer_name){
         $games = Game::where('developer', $developer_name)->get();
         // dd($games->first());
         $genres = Genre::all();
-        return view('gameList',compact('games','genres'));
+        $caption = "All games made by ".$developer_name;
+        return view('gameList',compact('games','genres','caption'));
     }
     public function create(){
         $id=Auth::user()->id;
