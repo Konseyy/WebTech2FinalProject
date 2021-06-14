@@ -23,6 +23,12 @@ class GameController extends Controller
         $genres = Genre::all();
         return view('gameList',compact('games','genres'));
     }
+    public function indexByDeveloper($developer_name){
+        $games = Game::where('developer', $developer_name)->get();
+        // dd($games->first());
+        $genres = Genre::all();
+        return view('gameList',compact('games','genres'));
+    }
     public function create(){
         $id=Auth::user()->id;
         $genres = Genre::all();

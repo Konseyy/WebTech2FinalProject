@@ -19,11 +19,12 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('home/{genre_id}','GameController@indexByGenre')->name('home.genre');
+Route::get('home/genre/{genre_id}','GameController@indexByGenre')->name('home.genre');
+Route::get('home/dev/{developer_name}','GameController@indexByDeveloper')->name('home.developer');
 Route::get('/game/new', 'GameController@create')->name('game.new');
 Route::post('/game/new', 'GameController@store')->name('game.new');
-Route::post('/image/upload/{gameid}','PhotoController@store')->name('image.upload');
 Route::get('/genre/new','GenreController@create')->name('genre.new');
 Route::post('/genre/new','GenreController@store')->name('genre.new');
+Route::get('game/{game_id}','GameController@show')->name('game.show');
 
 Route::get('/home', 'GameController@index')->name('home');
