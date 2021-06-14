@@ -23,8 +23,9 @@ class GameController extends Controller
     public function indexByGenre($genre_id){
         $games = Game::where('genre_id',$genre_id)->get();
         $genres = Genre::all();
-        $caption = "All games classified as ".Genre::where('id',$genre_id)->first()->name;
-        return view('gameList',compact('games','genres','caption'));
+        $caption = "Genre: ".Genre::where('id',$genre_id)->first()->name;
+        $description = Genre::where('id',$genre_id)->first()->description;
+        return view('gameList',compact('games','genres','caption','description'));
     }
     public function indexByDeveloper($developer_name){
         $games = Game::where('developer', $developer_name)->get();

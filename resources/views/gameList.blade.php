@@ -19,7 +19,11 @@
             @if(!isset($caption))
                 <div class="card-header" style="font-size:30px;">{{ __('Catalog') }}</div>
             @else
-            <div class="card-header" style="font-size:30px;">{{$caption}}</div>
+            <div class="card-header" style="font-size:30px;">{{$caption}}
+            @if(isset($description))
+             <p class="text-muted" style="font-size:20px;">{{$description}}</p>
+            @endif
+            </div>
             @endif
                 <div class="card-body col">
                 <div class="row">

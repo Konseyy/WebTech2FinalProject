@@ -24,10 +24,7 @@
                 
                     <div class="card-body col">
                     <div class="row">
-                        <div style="padding-left:20px;" class="col-sm-3">
-                            <div class="row">
-                            <h2>Name: {{$game->name}}</h2>
-                            </div>
+                        <div style="padding-left:20px;position:relative" class="col-sm-3">
                             <div class="row">
                             <h2>Developer: <a href="{{route('home.dev', $game->developer)}}">{{$game->developer}}</a></h2>
                             </div>
@@ -41,11 +38,13 @@
                             <h4 class="text-muted">Game has no description</h4>
                             @endif
                             </div>
-                            <div  class="row">
+                            <div style="position:absolute;bottom:0;">
+                            <div style="align-self:end" class="row">
+                            <h4 class="text-muted">Views: {{$viewCount}}</h4>
+                            </div>
+                            <div style="align-self:end" class="row">
                             <h4 class="text-muted">Uploaded by: <a href="{{route('home.user',$uploader->id)}}">{{$uploader->name}}</a></h4>
                             </div>
-                            <div  class="row">
-                            <h4 class="text-muted">Views: {{$viewCount}}</h4>
                             </div>
                         </div>
                         <div class="col">
@@ -70,7 +69,7 @@
                                 @if($comment->user_id==$current->id)
                                     <div style="margin-bottom:5px;" class="img-thumbnail col-sm-2">
                                     <div class="row">
-                                    <h3 style="padding-left:6px;text-transform:capitalize;">{{$user->name}}</h3>
+                                    <h3 style="padding-left:5px;"><a class="text-dark" href="{{route('home.user',$uploader->id)}}">{{$current->name}}</a></h3>
                                     <p style="margin-left:auto;margin-right:5px;">{{$comment->created_at}}</p>
                                     </div>
                                         <p>{{$comment->content}}</p>
