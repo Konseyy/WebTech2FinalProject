@@ -29,6 +29,8 @@ Route::post('/genre/new','GenreController@store')->name('genre.new');
 Route::get('game/{game_id}','GameController@show')->name('game.show');
 Route::get('game/edit/{game_id}','GameController@edit')->name('game.edit');
 Route::post('game/delete','GameController@delete')->name('game.delete');
+Route::post('/game/comment','CommentController@store')->name('comment.new');
+Route::post('/comment/delete','CommentController@delete')->name('comment.delete');
 
 
 

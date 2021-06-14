@@ -26,7 +26,7 @@
                 @foreach($games as $game)
                     <div class="img-thumbnail">
                         <h3 style="text-transform:capitalize;">
-                        <a href="{{route('game.show',$game->id)}}" class="text-light">
+                        <a href="{{route('game.show',$game->id)}}" class="text-dark">
                         {{$game->name}}
                         </a>
                         </h3>

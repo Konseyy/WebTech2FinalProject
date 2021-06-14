@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use App\Models\Game;
 use App\Models\Genre;
 use App\Models\View;
+use App\Models\Comment;
 use App\User;
 use Illuminate\Http\Request;
 use Validator;
@@ -87,7 +88,9 @@ class GameController extends Controller
         $uploader = User::where('id',$game->user_id)->first();
         $genre = Genre::where('id',$game->genre_id)->first();
         $viewCount = count(View::where('game_id',$id)->get());
-        return view('game',compact('game', 'genre','user','uploader','viewCount'));
+        $users = User::all();
+        $comments = Comment::where('game_id',$game->id)->get();
+        return view('game',compact('game', 'genre','user','uploader','viewCount','users','comments'));
     }
     public function delete(Request $request){
         //Delete game with specific ID

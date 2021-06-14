@@ -52,6 +52,40 @@
                             <img style="height:25vw;" src="{{$game->photo_url}}">
                         </div>
                         </div>
+                        <div class="row col">
+                            <form  class="col" action="{{route('comment.new')}}" method="POST">
+                                @csrf
+                                <input type="hidden" value="{{$game->id}}" name="game_id">
+                                <input type="hidden" value="{{$user->id}}" name="user_id">
+                                <div class="row col">
+                                <input class="row col-sm-3 form-control" type="text" name="content" placeholder="Add comment...">
+                                </div>
+                                <div style="margin-top:10px;margin-bottom:20px" class="row col">
+                                <input class="btn btn-block btn-primary col-sm-2" type="submit" value="Comment">
+                                </div>
+                            </form>
+                        </div>
+                        @foreach($comments as $comment)
+                            @foreach($users as $current)
+                                @if($comment->user_id==$current->id)
+                                    <div style="margin-bottom:5px;" class="img-thumbnail col-sm-2">
+                                    <div class="row">
+                                    <h3 style="padding-left:6px;text-transform:capitalize;">{{$user->name}}</h3>
+                                    <p style="margin-left:auto;margin-right:5px;">{{$comment->created_at}}</p>
+                                    </div>
+                                        <p>{{$comment->content}}</p>
+                                        @if($comment->user_id==$user->id or $user->role=='admin')
+                                        <form method="POST" action="{{route('comment.delete')}}">
+                                        @csrf
+                                        <input type="hidden" name="id" value={{$comment->id}}>
+                                        <input type="submit" class="btn btn-block btn-danger" value="Delete">
+                                        </form>
+                                        @endif
+                                    </div>
+                                    
+                                @endif
+                            @endforeach
+                        @endforeach
                     </div>
                 </div>
             </div>

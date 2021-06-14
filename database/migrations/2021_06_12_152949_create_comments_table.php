@@ -17,7 +17,7 @@ class CreateCommentsTable extends Migration
             $table->id()->unique();
             $table->foreignId('user_id')->constrained('users');
             $table->foreignId('game_id')->constrained('games');
-            $table->string('content',200);
+            $table->string('content',60);
             $table->timestamps();
         });
     }
