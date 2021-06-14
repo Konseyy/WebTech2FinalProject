@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use App\Models\Game;
 use App\Models\Genre;
 use App\Models\View;
+use App\User;
 use Illuminate\Http\Request;
 use Validator;
 use Auth;
@@ -20,16 +21,20 @@ class GameController extends Controller
     }
     public function indexByGenre($genre_id){
         $games = Game::where('genre_id',$genre_id)->get();
-        // dd($games->first());
         $genres = Genre::all();
-        $caption = "All games in ".Genre::where('id',$genre_id)->first()->name." genre";
+        $caption = "All games classified as ".Genre::where('id',$genre_id)->first()->name;
         return view('gameList',compact('games','genres','caption'));
     }
     public function indexByDeveloper($developer_name){
         $games = Game::where('developer', $developer_name)->get();
-        // dd($games->first());
         $genres = Genre::all();
         $caption = "All games made by ".$developer_name;
+        return view('gameList',compact('games','genres','caption'));
+    }
+    public function indexByUser($user_id){
+        $games = Game::where('user_id', $user_id)->get();
+        $genres = Genre::all();
+        $caption = "All games uploaded by ".User::where('id',$user_id)->first()->name;
         return view('gameList',compact('games','genres','caption'));
     }
     public function create(){
@@ -79,8 +84,10 @@ class GameController extends Controller
         $view->user_id= $user->id;
         $view->save();
         $game = Game::where('id',$id)->first();
+        $uploader = User::where('id',$game->user_id)->first();
         $genre = Genre::where('id',$game->genre_id)->first();
-        return view('game',compact('game', 'genre','user'));
+        $viewCount = count(View::where('game_id',$id)->get());
+        return view('game',compact('game', 'genre','user','uploader','viewCount'));
     }
     public function delete(Request $request){
         //Delete game with specific ID

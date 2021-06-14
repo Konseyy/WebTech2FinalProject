@@ -21,6 +21,7 @@ Auth::routes();
 
 Route::get('home/genre/{genre_id}','GameController@indexByGenre')->name('home.genre');
 Route::get('home/dev/{developer_name}','GameController@indexByDeveloper')->name('home.dev');
+Route::get('home/user/{user_id}','GameController@indexByUser')->name('home.user');
 Route::get('/game/new', 'GameController@create')->name('game.new');
 Route::post('/game/new', 'GameController@store')->name('game.new');
 Route::get('/genre/new','GenreController@create')->name('genre.new');

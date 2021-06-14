@@ -34,12 +34,18 @@
                             <div class="row">
                             <h2>Genre: <a href="{{route('home.genre', $genre->id)}}">{{$genre->name}}</a></h2>
                             </div>
-                            <div class="row">
+                            <div style="margin-top:2vh;" class="row">
                             @if($game->description!='')
-                            <h4 class="text-muted">Description: {{$game->description}}</h4>
+                            <h4 class="text-muted">{{$game->description}}</h4>
                             @else
                             <h4 class="text-muted">Game has no description</h4>
                             @endif
+                            </div>
+                            <div  class="row">
+                            <h4 class="text-muted">Uploaded by: <a href="{{route('home.user',$uploader->id)}}">{{$uploader->name}}</a></h4>
+                            </div>
+                            <div  class="row">
+                            <h4 class="text-muted">Views: {{$viewCount}}</h4>
                             </div>
                         </div>
                         <div class="col">

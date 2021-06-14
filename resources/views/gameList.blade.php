@@ -6,6 +6,9 @@
             <div class="card">
                 <div class="card-header text-center" style="font-size:20px;">{{ __('Options') }}</div>
                 <div class="card-body col">
+                    @if(isset($caption))
+                    <a class="btn btn-info btn-block" href="{{route('home')}}">View all Games</a>
+                    @endif
                     <a class="btn btn-info btn-block" href="{{route('game.new')}}">Upload New Game</a>
                     <a class="btn btn-info btn-block" href="{{route('genre.new')}}">Add New Game Genre</a>
                 </div>
