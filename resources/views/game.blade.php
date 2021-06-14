@@ -82,7 +82,7 @@
                                         <form method="POST" action="{{route('comment.delete')}}">
                                         @csrf
                                         <input type="hidden" name="id" value={{$comment->id}}>
-                                        <input type="submit" class="btn btn-block btn-danger" value="Delete">
+                                        <input style="margin-left:auto;" type="submit" class="col-sm-4 btn btn-block btn-danger" value="Delete">
                                         </form>
                                         @endif
                                         @endif

@@ -145,7 +145,7 @@ class GameController extends Controller
         $genre = Genre::where('id',$game->genre_id)->first();
         $viewCount = count(View::where('game_id',$id)->get());
         $users = User::all();
-        $comments = Comment::where('game_id',$game->id)->get();
+        $comments = Comment::where('game_id',$game->id)->orderBy('created_at')->get();
         return view('game',compact('game', 'genre','user','uploader','viewCount','users','comments','guest'));
     }
     public function delete(Request $request){

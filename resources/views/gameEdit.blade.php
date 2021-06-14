@@ -39,7 +39,7 @@
                             <input placeholder="Description goes here..." name="description" class="form-control" type="text" value="{{$game->description}}">
                             </div>
                         </div>
-                        <div class="col">
+                        <div >
                             <label for="file">Update cover Photo (max 2MB)</label>
                             <input class="btn btn-block btn-secondary" type="file" name="file" placeholder="cover photo">
                             <img style="height:25vw;" src="{{$game->photo_url}}">
