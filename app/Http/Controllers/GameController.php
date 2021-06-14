@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use App\Models\Game;
 use App\Models\Genre;
+use App\Models\View;
 use Illuminate\Http\Request;
 use Validator;
 use Auth;
@@ -69,9 +70,23 @@ class GameController extends Controller
         //Store game from incoming request from create method form
     }
     public function show($id){
-        //Show game with specific ID
+        //Show game with specific ID and add view
+        $user = Auth::user();
+        $view = new View;
+        $view->game_id=$id;
+        $view->user_id= $user->id;
+        $view->save();
+        $game = Game::where('id',$id)->first();
+        $genre = Genre::where('id',$game->genre_id)->first();
+        return view('game',compact('game', 'genre','user'));
     }
-    public function delete($id){
+    public function delete(Request $request){
         //Delete game with specific ID
+        $request->validate([
+            'game_id' => 'required',
+        ]);
+        View::where('game_id',$request->game_id)->delete();
+        Game::where('id',$request->game_id)->delete();
+        return redirect()->route('home');
     }
 }
