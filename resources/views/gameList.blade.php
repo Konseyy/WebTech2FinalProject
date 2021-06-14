@@ -14,10 +14,26 @@
         <div class="col">
             <div class="card">
                 <div class="card-header">{{ __('Gallery') }}</div>
-                <div class="card-body col-md-2">
-                    @foreach($games as $game)
-                        <p>$game->id</p>
-                    @endforeach
+                <div class="card-body col">
+                <div class="row">
+                @foreach($games as $game)
+                    <div class="img-thumbnail">
+                        <h3 class="">{{$game->name}}</h3>
+                        <h3 class="text-primary">
+                        @foreach($genres as $genre)
+                        @if($genre->id==$game->genre_id)
+                        <a href="{{route('home.genre',$genre->id)}}">
+                        {{$genre->name}}
+                        </a>
+                        @endif
+                        @endforeach
+                        </h3>
+                        <h3>{{$game->developer}}</h3>
+                        <img style="height:15vw; width:15vw;"  src="{{$game->photo_url}}">
+                    </div> 
+                @endforeach
+                </div>
+                    
                     
                 </div>
             </div>

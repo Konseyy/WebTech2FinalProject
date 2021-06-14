@@ -15,12 +15,12 @@ class CreateGamesTable extends Migration
     {
         Schema::create('games', function (Blueprint $table) {
             $table->id()->unique();
-            $table->string('name');
+            $table->string('name',100);
             $table->string('photo_url',100);
             $table->foreignId('user_id')->constrained('users');
             $table->foreignId('genre_id')->constrained('genres');
             $table->string('developer',100);
-            $table->string('description',800)->nullable();
+            $table->string('description',100)->nullable();
             $table->timestamps();
         });
     }

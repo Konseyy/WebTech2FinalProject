@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 use App\Models\Genre;
+use Validator;
 use Illuminate\Http\Request;
 
 class GenreController extends Controller
@@ -13,6 +14,10 @@ class GenreController extends Controller
         return view('genreCreate');
     }
     public function store(Request $request){
+        $request->validate([
+            'name '=> 'required|string|max:30',
+            'description' => 'string|max:100',
+        ]);
         $genre = new Genre;
         $genre->name=$request->name;
         $genre->description=$request->description;

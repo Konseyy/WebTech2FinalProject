@@ -3,7 +3,7 @@
 <div class="container col">
     <div class="row justify-content-center">
         <div class="col-sm-5">
-            <form method="POST" action="{{route('game.new')}}">
+            <form method="POST" action="{{route('game.new')}}" enctype="multipart/form-data">
                 @csrf
                 <div class="row">
                 <div class="col-sm-4">

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use App\Models\Game;
 use App\Models\Genre;
 use Illuminate\Http\Request;
+use Validator;
 use Auth;
 
 class GameController extends Controller
@@ -13,7 +14,14 @@ class GameController extends Controller
     }
     public function index(){
         $games = Game::all();
-        return view('gameList',compact('games'));
+        $genres = Genre::all();
+        return view('gameList',compact('games','genres'));
+    }
+    public function indexByGenre($genre_id){
+        $games = Game::where('genre_id',$genre_id)->get();
+        // dd($games->first());
+        $genres = Genre::all();
+        return view('gameList',compact('games','genres'));
     }
     public function create(){
         $id=Auth::user()->id;
@@ -22,10 +30,11 @@ class GameController extends Controller
     }
     public function store(Request $request){
         $request->validate([
-            'user_id '=> 'required|integer',
-            'genre' => 'required|string',
-            'developer' => 'rquired|string|max:100',
-            'description' => 'string|max:800',
+            'name' => 'required|string|max:100',
+            'user_id'=> 'required',
+            'genre' => 'required',
+            'developer' => 'required|string|max:100',
+            'description' => 'nullable|string|max:100',
             'file' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
 
         ]);
@@ -50,7 +59,7 @@ class GameController extends Controller
         $game->developer = $request->developer;
         $game->description = $request->description;
         $game->save();
-        return back();
+        return redirect()->route('home');
         //Store game from incoming request from create method form
     }
     public function show($id){
