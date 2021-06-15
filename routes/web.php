@@ -14,20 +14,21 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect()->route('home',['order'=>'date']);
 });
+// Route::get('/home', function () {
+//     return redirect()->route('home','date');
+// });
 
 Auth::routes();
 
-Route::get('/home', 'GameController@index')->name('home');
-Route::get('home/genre/{genre_id}','GameController@indexByGenre')->name('home.genre');
-Route::get('home/dev/{developer_name}','GameController@indexByDeveloper')->name('home.dev');
-Route::get('home/user/{user_id}','GameController@indexByUser')->name('home.user');
+Route::get('/home/{order}', 'GameController@index')->name('home');
+Route::get('/home/{order}/{filter}/{id}','GameController@index')->name('home.filter');
 
 Route::get('/game/new', 'GameController@create')->name('game.new');
 Route::post('/game/new', 'GameController@store')->name('game.new');
 Route::get('game/{game_id}','GameController@show')->name('game.show');
-Route::get('game/edit/{game_id}','GameController@edit')->name('game.edit');
+Route::get('game/{game_id}/edit','GameController@edit')->name('game.edit');
 Route::post('game/edit','GameController@update')->name('game.update');
 Route::post('game/delete','GameController@delete')->name('game.delete');
 

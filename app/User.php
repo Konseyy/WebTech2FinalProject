@@ -36,7 +36,13 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
-    public function keywords(){
-        return $this->belongsToMany(Keyword::class);
+    public function games(){
+        return $this->hasMany(Game::class);
+    }
+    public function comments(){
+        return $this->hasMany(Comment::class);
+    }
+    public function views(){
+        return $this->hasMany(View::class);
     }
 }

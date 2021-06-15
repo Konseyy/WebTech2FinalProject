@@ -13,31 +13,34 @@ use Auth;
 class GameController extends Controller
 {
     public function __construct(){
-        $this->middleware('auth')->except('index','indexByGenre','indexByDeveloper','show');
+        $this->middleware('auth')->except('index','show');
     }
-    public function index(){
-        $games = Game::all();
-        $genres = Genre::all();
-        return view('gameList',compact('games','genres'));
-    }
-    public function indexByGenre($genre_id){
-        $games = Game::where('genre_id',$genre_id)->get();
-        $genres = Genre::all();
-        $caption = "Genre: ".Genre::where('id',$genre_id)->first()->name;
-        $description = Genre::where('id',$genre_id)->first()->description;
-        return view('gameList',compact('games','genres','caption','description'));
-    }
-    public function indexByDeveloper($developer_name){
-        $games = Game::where('developer', $developer_name)->get();
-        $genres = Genre::all();
-        $caption = "All games made by ".$developer_name;
-        return view('gameList',compact('games','genres','caption'));
-    }
-    public function indexByUser($user_id){
-        $games = Game::where('user_id', $user_id)->get();
-        $genres = Genre::all();
-        $caption = "All games uploaded by ".User::where('id',$user_id)->first()->name;
-        return view('gameList',compact('games','genres','caption'));
+    public function index($order='date',$filter=NULL,$id=NULL){
+        //TODO sortinggggg
+        if(is_null($filter)){
+            $games = Game::withCount('views')->with('genre')->get();
+            $caption="Catalog";
+        }
+        else if($filter=='genre'){
+            $games = Game::withCount('views')->with('genre')->where('genre_id',$id)->get();
+            $caption = "Genre: ".Genre::where('id',$id)->first()->name;
+            $description = Genre::where('id',$id)->first()->description;
+        }
+        else if($filter=='dev'){
+            $games = Game::withCount('views')->with('genre')->where('developer', $id)->get();
+            $caption = "All games made by ".$id;
+        }
+        else if($filter=='user'){
+            $games = Game::withCount('views')->with('genre')->with('user')->where('user_id', $id)->get();
+            $caption = "All games uploaded by ".User::where('id',$id)->first()->name;
+        }
+        if($order=='date'){
+            $games->sortByDesc('created_at');
+        }
+        else if($order=='views'){
+            $games->sortByDesc('views_count');
+        }
+        return view('gameList',compact('games','caption'));
     }
     public function create(){
         $id=Auth::user()->id;
@@ -127,26 +130,19 @@ class GameController extends Controller
         }
         return redirect()->route('game.show',$request->game_id);
     }
-    public function show($id){
+    public function show($game_id){
         //Show game with specific ID and add view
         $guest=false;
         $user = Auth::user();
         $view = new View;
-        $view->game_id=$id;
+        $view->game_id=$game_id;
         if(!Auth::guest()){
             $view->user_id= $user->id;
         }
-        else{
-            $guest =true;
-        }
         $view->save();
-        $game = Game::where('id',$id)->first();
-        $uploader = User::where('id',$game->user_id)->first();
-        $genre = Genre::where('id',$game->genre_id)->first();
-        $viewCount = count(View::where('game_id',$id)->get());
-        $users = User::all();
-        $comments = Comment::where('game_id',$game->id)->orderBy('created_at')->get();
-        return view('game',compact('game', 'genre','user','uploader','viewCount','users','comments','guest'));
+        $game = Game::withCount('views')->where('id',$game_id)->with(['user','genre'])->first();
+        $comments = Comment::where('game_id',$game->id)->with('user')->orderBy('created_at')->get();
+        return view('game',compact('game','user','comments'));
     }
     public function delete(Request $request){
         //Delete game with specific ID
