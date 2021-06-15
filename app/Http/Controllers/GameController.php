@@ -17,6 +17,11 @@ class GameController extends Controller
     }
     public function index($order='date',$filter=NULL,$id=NULL){
         //TODO sortinggggg
+        $params =array(
+            'order'=>$order,
+            'filter'=>$filter,
+            'id'=>$id,
+        );
         if(is_null($filter)){
             $games = Game::withCount('views')->with('genre')->get();
             $caption="Catalog";
@@ -41,7 +46,24 @@ class GameController extends Controller
         else if($order=='views'){
             $games->sortByDesc('views_count');
         }
-        return view('gameList',compact('games','caption','order'));
+        if(!Auth::guest()){
+            $recentGames= View::selectRaw('game_id,max(created_at) as date')->where('user_id',Auth::user()->id)->groupBy('game_id')->orderBy('date','DESC')->get();
+            $gameIds =array();
+            $i=1;
+            foreach($recentGames as $current){
+                if($i>3)break;
+                array_push($gameIds, $current->game_id);
+                $i++;
+            }
+            $recentGames =collect();
+            foreach($gameIds as $current){
+                $recentGames->push(Game::where('id',$current)->first());
+            }
+        }
+        else{
+            $recentGames =null;
+        }
+        return view('gameList',compact('games','caption','params','recentGames'));
     }
     public function create(){
         $id=Auth::user()->id;
@@ -83,9 +105,6 @@ class GameController extends Controller
     }
     public function edit($game_id){
         $game = Game::where('id',$game_id)->first();
-        if(Auth::user()->id!=$game->user_id and Auth::user()->role!='admin'){
-            return redirect()->route('home');
-        }
         $genre = Genre::where('id',$game->genre_id)->first();
         $genres = Genre::all();
         return view('gameEdit',compact('game','genre','genres'));
@@ -146,13 +165,9 @@ class GameController extends Controller
         return view('game',compact('game','user','comments'));
     }
     public function delete(Request $request){
-        //Delete game with specific ID
         $request->validate([
             'game_id' => 'required',
         ]);
-        if(Auth::user()->id!=Game::where('id',$request->game_id)->first()->user_id and Auth::user()->role!='admin'){
-            return redirect()->route('home');
-        }
         View::where('game_id',$request->game_id)->delete();
         Game::where('id',$request->game_id)->delete();
         return redirect()->route('home');

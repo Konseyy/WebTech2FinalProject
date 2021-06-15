@@ -9,12 +9,17 @@
                         {{ __('Options') }}
                     </div>
                     <div class="card-body col">
-                        <div class="row">
-                            <label style="padding-top:5px;" class="btn-block col" for="order">Sort By</label>
-                            <select name="order" style="margin-right:10%" class="custom-select col-sm-8">
-                            <option>Date</option>
-                            <option>Views</option>
-                            </select>
+                        <div style="margin-bottom:20px;" class="row col">
+                            <label style="padding-top:5px;" class="btn-block col-sm-5" for="order">Sort By</label>
+                            <div class="row col" name="order">
+                                @if($params['filter']==NULL)
+                                    <a class="btn btn-block btn-info" href="{{route('home','date')}}">Date</a>
+                                    <a class="btn btn-block btn-info" href="{{route('home','views')}}">Views</a>
+                                @else
+                                    <a class="btn btn-block btn-info" href="{{route('home.filter',['order'=>'date','filter'=>$params['filter'],'id'=>$params['id']])}}">Date</a>
+                                    <a class="btn btn-block btn-info" href="{{route('home.filter',['order'=>'views','filter'=>$params['filter'],'id'=>$params['id']])}}">Views</a>
+                                @endif
+                            </div>
                         </div>
                         @if(isset($caption) and $caption!="Catalog")
                         <a class="btn btn-info btn-block" href="{{route('home','date')}}">View all Games</a>
@@ -24,10 +29,28 @@
                         <a class="btn btn-info btn-block" href="{{route('genre.new')}}">Add New Game Genre</a>
                         
                     </div>
+                    <div class="card-header text-center" style="font-size:20px;">
+                        Your recently viewed
+                        
+                    </div>
+                    <div class="card-body col">
+                    @if(!$recentGames->isEmpty())
+                            @foreach($recentGames as $game)
+                                <div style="margin-bottom:5px; justify-content:center" class="row">
+                                    <a style="width:75%" class="btn btn-block btn-secondary" href="{{route('game.show',$game->id)}}" style="text-transform:capitalize;">{{$game->name}}</a>
+                                </div>
+                            @endforeach
+                        @else
+                            <div style="justify-content:center" class="row">
+                                No recently viewed games
+                            </div>
+                        @endif
+                    </div>
+                    
                 @endauth
                 @guest
                     <div class="card-header text-center" style="font-size:20px;">
-                        Log in to see options
+                        <a href="{{route('login')}}">Log in</a> to see options
                     </div>
 
                 @endguest
@@ -43,7 +66,7 @@
             </div>
                 <div class="card-body col">
                     <div class="row">
-                    @if($order=="date")
+                    @if($params['order']=="date")
                         @foreach($games->sortByDesc('created_at') as $game)
                             <div class="img-thumbnail">
                                 <h3 style="text-transform:capitalize;">

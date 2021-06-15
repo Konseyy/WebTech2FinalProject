@@ -16,9 +16,9 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return redirect()->route('home',['order'=>'date']);
 });
-// Route::get('/home', function () {
-//     return redirect()->route('home','date');
-// });
+Route::get('/home', function () {
+    return redirect()->route('home','date');
+});
 
 Auth::routes();
 
