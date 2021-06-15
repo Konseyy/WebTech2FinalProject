@@ -16,7 +16,7 @@
                             <option>Views</option>
                             </select>
                         </div>
-                        @if(isset($caption))
+                        @if(isset($caption) and $caption!="Catalog")
                         <a class="btn btn-info btn-block" href="{{route('home','date')}}">View all Games</a>
                         @endif
                         
@@ -43,7 +43,8 @@
             </div>
                 <div class="card-body col">
                     <div class="row">
-                        @foreach($games as $game)
+                    @if($order=="date")
+                        @foreach($games->sortByDesc('created_at') as $game)
                             <div class="img-thumbnail">
                                 <h3 style="text-transform:capitalize;">
                                     <a href="{{route('game.show',$game->id)}}" class="text-dark">
@@ -65,6 +66,30 @@
                                 </a>
                             </div> 
                         @endforeach
+                    @else
+                        @foreach($games->sortByDesc('views_count') as $game)
+                            <div class="img-thumbnail">
+                                <h3 style="text-transform:capitalize;">
+                                    <a href="{{route('game.show',$game->id)}}" class="text-dark">
+                                        {{$game->name}}
+                                    </a>
+                                </h3>
+                                <h3 class="text-primary" >
+                                            <a href="{{route('home.filter',['order'=>'date','filter'=>'genre','id'=>$game->genre->id])}}" style="text-transform:capitalize;">
+                                                {{$game->genre->name}}
+                                            </a>
+                                </h3>
+                                <h3 style="text-transform:capitalize;" class="text-muted">
+                                    <a href="{{route('home.filter',['order'=>'date','filter'=>'dev','id'=>$game->developer])}}" class="text-muted">
+                                        {{$game->developer}}
+                                    </a>
+                                </h3>
+                                <a href="{{route('game.show',$game->id)}}">
+                                    <img style="height:12vw; width:12vw;"  src="{{$game->photo_url}}">
+                                </a>
+                            </div> 
+                        @endforeach
+                    @endif
                     </div>
                 </div>
             </div>

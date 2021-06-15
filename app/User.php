@@ -6,6 +6,11 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
+use App\Models\View;
+use App\Models\Game;
+use App\Models\Comment;
+
+
 class User extends Authenticatable
 {
     use Notifiable;

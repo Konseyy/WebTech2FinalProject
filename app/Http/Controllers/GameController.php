@@ -34,13 +34,14 @@ class GameController extends Controller
             $games = Game::withCount('views')->with('genre')->with('user')->where('user_id', $id)->get();
             $caption = "All games uploaded by ".User::where('id',$id)->first()->name;
         }
+        // dd($games->first()->views_count);
         if($order=='date'){
             $games->sortByDesc('created_at');
         }
         else if($order=='views'){
             $games->sortByDesc('views_count');
         }
-        return view('gameList',compact('games','caption'));
+        return view('gameList',compact('games','caption','order'));
     }
     public function create(){
         $id=Auth::user()->id;
