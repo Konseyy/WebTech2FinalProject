@@ -39,6 +39,32 @@
                                         <h4 class="text-muted">Game has no description</h4>
                                     @endif
                                 </div>
+                                @auth
+                                    @if($game->user_id==$user->id or $user->role=='admin')
+                                        <form style="align-self:center;margin-bottom:20px;" method="POST" action="{{route('tag.new')}}">
+                                            @csrf
+                                            <input type="hidden" name="game_id" value={{$game->id}}>
+                                            <input style="margin-bottom:10px;" class="col-sm-5 form-control" type="text" name="name" placeholder="Add new tag...">
+                                            <input class="col-sm-5 btn btn-block btn-primary" type="submit" value="Add">
+                                        </form>
+                                    @endif
+                                @endauth
+                                @if(!$tags->isEmpty())
+                                    @auth
+                                        <h3>Tags</h3>
+                                        <ul>
+                                        @foreach($tags as $tag)
+                                            <li>
+                                                @if($game->user_id==$user->id or $user->role=='admin')
+                                                <p>{{$tag->name}} <a href="{{route('tag.delete',['game_id'=>$game->id,'name'=>$tag->name])}}" class="text-danger">remove</a></p>
+                                                @else
+                                                <p>{{$tag->name}}</p>
+                                                @endif
+                                            </li>
+                                        @endforeach
+                                        </ul>
+                                    @endauth
+                                @endif
                                 <div style="position:absolute;bottom:0;">
                                 <div style="align-self:end" class="row">
                                     <h4 class="text-muted">Views: {{$game->views_count}}</h4>

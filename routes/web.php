@@ -32,6 +32,9 @@ Route::get('game/{game_id}/edit','GameController@edit')->name('game.edit');
 Route::post('game/edit','GameController@update')->name('game.update');
 Route::post('game/delete','GameController@delete')->name('game.delete');
 
+Route::post('game/tag/new','TagController@store')->name('tag.new');
+Route::get('game/{game_id}/tag/delete/{name}','TagController@delete')->name('tag.delete');
+
 Route::get('/genre/new','GenreController@create')->name('genre.new');
 Route::post('/genre/new','GenreController@store')->name('genre.new');
 

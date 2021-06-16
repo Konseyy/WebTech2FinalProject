@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use App\Models\Game;
 use App\Models\Genre;
 use App\Models\View;
+use App\Models\Tag;
 use App\Models\Comment;
 use App\User;
 use Illuminate\Http\Request;
@@ -36,10 +37,28 @@ class GameController extends Controller
             $caption = "All games made by ".$id;
         }
         else if($filter=='user'){
-            $games = Game::withCount('views')->with('genre')->with('user')->where('user_id', $id)->get();
+            $games = Game::withCount('views')->join('genres','games.genre_id','=','genres.id')->join('users','games.user_id','=','users.id')->where('user_id', $id)->get();
             $caption = "All games uploaded by ".User::where('id',$id)->first()->name;
         }
-        // dd($games->first()->views_count);
+        if($filter=='search'){
+            $nameQuery = Game::where('name','like','%'.$id.'%');
+            $genreQuery = Game::whereHas('genre', function($query) use($id){
+                return $query->where('name','like','%'.$id.'%');
+            });
+            $userQuery = Game::whereHas('user', function($query) use($id){
+                return $query->where('name','like','%'.$id.'%');
+            });
+            $tagQuery = Game::whereHas('tags', function($query) use($id){
+                return $query->where('name','like','%'.$id.'%');
+            });
+            $games=Game::query()->whereNull('id')->union($nameQuery)->union($genreQuery)->union($userQuery)->union($tagQuery);
+            $games=$games->with(['views','genre','user']);
+            $games=$games->get();
+            foreach($games as $current){
+                $current->views_count =$current->views->count();
+            }
+            $caption="Results for \"".$id."\"";
+        }
         if($order=='date'){
             $games->sortByDesc('created_at');
         }
@@ -162,7 +181,8 @@ class GameController extends Controller
         $view->save();
         $game = Game::withCount('views')->where('id',$game_id)->with(['user','genre'])->first();
         $comments = Comment::where('game_id',$game->id)->with('user')->orderBy('created_at')->get();
-        return view('game',compact('game','user','comments'));
+        $tags = Tag::where('game_id',$game->id)->get();
+        return view('game',compact('game','user','comments','tags'));
     }
     public function delete(Request $request){
         $request->validate([

@@ -12,6 +12,7 @@
                         <div style="margin-bottom:20px;" class="row col">
                             <label style="padding-top:5px;" class="btn-block col-sm-5" for="order">Sort By</label>
                             <div class="row col" name="order">
+                                
                                 @if($params['filter']==NULL)
                                     <a class="btn btn-block btn-info" href="{{route('home','date')}}">Date</a>
                                     <a class="btn btn-block btn-info" href="{{route('home','views')}}">Views</a>
@@ -60,8 +61,10 @@
             <div class="card">
             <div class="card-header" style="font-size:30px;">
             {{$caption}}
-            @if($games->first()->genre->description!='')
-                <p class="text-muted" style="font-size:20px;">{{$games->first()->genre->description}}</p>
+            @if($params['filter']!='search')
+                @if($games->first()->genre->description!='')
+                    <p class="text-muted" style="font-size:20px;">{{$games->first()->genre->description}}</p>
+                @endif
             @endif
             </div>
                 <div class="card-body col">
