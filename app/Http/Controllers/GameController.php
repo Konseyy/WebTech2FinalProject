@@ -17,7 +17,6 @@ class GameController extends Controller
         $this->middleware('auth')->except('index','show','search');
     }
     public function index($order='date',$filter=NULL,$id=NULL){
-        //TODO sortinggggg
         $params =array(
             'order'=>$order,
             'filter'=>$filter,
@@ -127,7 +126,7 @@ class GameController extends Controller
         $game->developer = $request->developer;
         $game->description = $request->description;
         $game->save();
-        return redirect()->route('home');
+        return redirect()->route('home','date');
         //Store game from incoming request from create method form
     }
     public function edit($game_id){
@@ -198,6 +197,6 @@ class GameController extends Controller
         ]);
         View::where('game_id',$request->game_id)->delete();
         Game::where('id',$request->game_id)->delete();
-        return redirect()->route('home');
+        return redirect()->route('home','date');
     }
 }

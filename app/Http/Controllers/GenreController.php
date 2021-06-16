@@ -22,6 +22,6 @@ class GenreController extends Controller
         $genre->name=$request->name;
         $genre->description=$request->description;
         $genre->save();
-        return redirect()->route('home');
+        return redirect()->route('home','date');
     }
 }
