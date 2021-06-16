@@ -24,6 +24,7 @@ Auth::routes();
 
 Route::get('/home/{order}', 'GameController@index')->name('home');
 Route::get('/home/{order}/{filter}/{id}','GameController@index')->name('home.filter');
+Route::post('/home/search', 'GameController@search')->name('home.search');
 
 Route::get('/game/new', 'GameController@create')->name('game.new');
 Route::post('/game/new', 'GameController@store')->name('game.new');

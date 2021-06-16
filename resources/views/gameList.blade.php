@@ -10,9 +10,18 @@
                     </div>
                     <div class="card-body col">
                         <div style="margin-bottom:20px;" class="row col">
-                            <label style="padding-top:5px;" class="btn-block col-sm-5" for="order">Sort By</label>
-                            <div class="row col" name="order">
-                                
+                            
+                            <div class="col">
+                                <div class="row">
+                                <form method="POST" action="{{route('home.search')}}">
+                                    @csrf
+                                    <input name="searchTerm" class="col form-control" type="text" placeholder="Search...">
+                                    <input type="hidden" name="order" value="{{$params['order']}}" >
+                                    <input class="btn btn-block btn-primary" type="submit" value="Search">
+                                </form>
+                                </div>
+                                <div class="row">
+                                <label style="padding-top:5px;" class="btn-block col-sm-5" for="order">Sort By</label>
                                 @if($params['filter']==NULL)
                                     <a class="btn btn-block btn-info" href="{{route('home','date')}}">Date</a>
                                     <a class="btn btn-block btn-info" href="{{route('home','views')}}">Views</a>
@@ -20,6 +29,7 @@
                                     <a class="btn btn-block btn-info" href="{{route('home.filter',['order'=>'date','filter'=>$params['filter'],'id'=>$params['id']])}}">Date</a>
                                     <a class="btn btn-block btn-info" href="{{route('home.filter',['order'=>'views','filter'=>$params['filter'],'id'=>$params['id']])}}">Views</a>
                                 @endif
+                                </div>
                             </div>
                         </div>
                         @if(isset($caption) and $caption!="Catalog")

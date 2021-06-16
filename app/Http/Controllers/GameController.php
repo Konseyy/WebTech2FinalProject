@@ -14,7 +14,7 @@ use Auth;
 class GameController extends Controller
 {
     public function __construct(){
-        $this->middleware('auth')->except('index','show');
+        $this->middleware('auth')->except('index','show','search');
     }
     public function index($order='date',$filter=NULL,$id=NULL){
         //TODO sortinggggg
@@ -83,6 +83,14 @@ class GameController extends Controller
             $recentGames =null;
         }
         return view('gameList',compact('games','caption','params','recentGames'));
+    }
+    public function search(Request $request){
+        $request->validate([
+            'searchTerm' => 'nullable|string|max:20',
+            'order' => 'required',
+        ]);
+        if($request->searchTerm=="") return redirect()->route('home',$request->order);
+        return redirect()->route('home.filter',['order'=>$request->order,'filter'=>'search','id'=>$request->searchTerm]);
     }
     public function create(){
         $id=Auth::user()->id;
