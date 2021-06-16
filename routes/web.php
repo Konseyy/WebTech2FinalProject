@@ -22,6 +22,8 @@ Route::get('/home', function () {
 
 Auth::routes();
 
+Route::get('lang/{lang}','LanguageController@switchLang')->name('lang.switch');
+
 Route::get('/home/{order}', 'GameController@index')->name('home');
 Route::get('/home/{order}/{filter}/{id}','GameController@index')->name('home.filter');
 Route::post('/home/search', 'GameController@search')->name('home.search');

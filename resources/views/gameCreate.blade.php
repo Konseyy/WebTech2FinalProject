@@ -11,10 +11,10 @@
                         <input type="hidden" name="user_id" value={{$id}}>
                     </div>
                     <div class="row">
-                        <input class="col-md-10 form-control" type="text" name="name" placeholder="Game name...">
+                        <input class="col-md-10 form-control" type="text" name="name" placeholder="{{ __('strings.name') }}">
                     </div>
                     <div class="row">
-                        <input class="col-md-10 form-control" type="text" name="developer" placeholder="Developer name...">
+                        <input class="col-md-10 form-control" type="text" name="developer" placeholder="{{ __('strings.dev') }}">
                     </div>
                     <div class="row">
                             @if(isset($genres))
@@ -24,17 +24,17 @@
                             @endforeach
                             </select>
                             @endif 
-                            <a class="col-md-4 offset-md-1 btn btn-block btn-secondary" href="{{route('genre.new')}}">Create new</a>
+                            <a class="col-md-4 offset-md-1 btn btn-block btn-secondary" href="{{route('genre.new')}}">{{ __('strings.upload_genre') }}</a>
                     </div>
                     <div class="row">
-                        <input class="col-md-10 form-control form-group-lg" type="text" name="description" placeholder="Description...">
+                        <input class="col-md-10 form-control form-group-lg" type="text" name="description" placeholder="{{ __('strings.description_here') }}">
                     </div>
                     <div class="row">
-                        <input class="col-md-10 btn btn-block btn-secondary" type="submit">
+                        <input class="col-md-10 btn btn-block btn-secondary" type="submit" value="{{ __('strings.upload_game') }}">
                     </div>
                 </div>
                 <div class="col-sm-auto offset-md-1">
-                <label for="file">Cover Photo (max 2MB)</label>
+                <label for="file">{{ __('strings.cover_photo') }} (max 2MB)</label>
                     <input class="btn btn-block btn-secondary" type="file" name="file" placeholder="cover photo">
                 </div>
                 </div>

@@ -6,43 +6,39 @@
             <div class="card">
                 @auth
                     <div class="card-header text-center" style="font-size:20px;">
-                        {{ __('Options') }}
+                    {{ __('strings.options') }}
                     </div>
                     <div class="card-body col">
                         <div style="margin-bottom:20px;" class="row col">
-                            
                             <div class="col">
                                 <div class="row">
                                 <form method="POST" action="{{route('home.search')}}">
                                     @csrf
-                                    <input name="searchTerm" class="col form-control" type="text" placeholder="Search...">
+                                    <input name="searchTerm" class="col form-control" type="text" placeholder="{{ __('strings.search') }}">
                                     <input type="hidden" name="order" value="{{$params['order']}}" >
-                                    <input class="btn btn-block btn-primary" type="submit" value="Search">
+                                    <input class="btn btn-block btn-primary" type="submit" value="{{ __('strings.search') }}">
                                 </form>
                                 </div>
                                 <div class="row">
-                                <label style="padding-top:5px;" class="btn-block col-sm-5" for="order">Sort By</label>
+                                <label style="padding-top:5px;" class="btn-block col-sm-5" for="order">{{ __('strings.sort_by') }}</label>
                                 @if($params['filter']==NULL)
-                                    <a class="btn btn-block btn-info" href="{{route('home','date')}}">Date</a>
-                                    <a class="btn btn-block btn-info" href="{{route('home','views')}}">Views</a>
+                                    <a class="btn btn-block btn-info" href="{{route('home','date')}}">{{ __('strings.by_date') }}</a>
+                                    <a class="btn btn-block btn-info" href="{{route('home','views')}}">{{ __('strings.by_views') }}</a>
                                 @else
-                                    <a class="btn btn-block btn-info" href="{{route('home.filter',['order'=>'date','filter'=>$params['filter'],'id'=>$params['id']])}}">Date</a>
-                                    <a class="btn btn-block btn-info" href="{{route('home.filter',['order'=>'views','filter'=>$params['filter'],'id'=>$params['id']])}}">Views</a>
+                                    <a class="btn btn-block btn-info" href="{{route('home.filter',['order'=>'date','filter'=>$params['filter'],'id'=>$params['id']])}}">{{ __('strings.date') }}</a>
+                                    <a class="btn btn-block btn-info" href="{{route('home.filter',['order'=>'views','filter'=>$params['filter'],'id'=>$params['id']])}}">{{ __('strings.date') }}</a>
                                 @endif
                                 </div>
                             </div>
                         </div>
                         @if(isset($caption) and $caption!="Catalog")
-                        <a class="btn btn-info btn-block" href="{{route('home','date')}}">View all Games</a>
+                        <a class="btn btn-info btn-block" href="{{route('home','date')}}">{{ __('strings.view_all') }}</a>
                         @endif
-                        
-                        <a class="btn btn-info btn-block" href="{{route('game.new')}}">Upload New Game</a>
-                        <a class="btn btn-info btn-block" href="{{route('genre.new')}}">Add New Game Genre</a>
-                        
+                        <a class="btn btn-info btn-block" href="{{route('game.new')}}">{{ __('strings.upload_game') }}</a>
+                        <a class="btn btn-info btn-block" href="{{route('genre.new')}}">{{ __('strings.upload_genre') }}</a>
                     </div>
                     <div class="card-header text-center" style="font-size:20px;">
-                        Your recently viewed
-                        
+                        {{ __('strings.recent') }}
                     </div>
                     <div class="card-body col">
                     @if(!$recentGames->isEmpty())
@@ -53,17 +49,15 @@
                             @endforeach
                         @else
                             <div style="justify-content:center" class="row">
-                                No recently viewed games
+                            {{ __('strings.no_recent') }}
                             </div>
                         @endif
                     </div>
-                    
                 @endauth
                 @guest
                     <div class="card-header text-center" style="font-size:20px;">
-                        <a href="{{route('login')}}">Log in</a> to see options
+                        <a href="{{route('login')}}">{{ __('strings.login') }}</a> {{ __('strings.see_options') }}
                     </div>
-
                 @endguest
             </div>
         </div>
